@@ -283,7 +283,8 @@ function renderQuestion() {
   forcedContinueKey = null;
   currentChoices = Engine.buildChoices(question);
 
-  els.roundLabel.textContent = `${Math.min(state.session.history.length + 1, state.meta.totalQuestions)} / ${state.meta.totalQuestions}`;
+  const progress = Engine.getSessionProgress(state.session, state.meta.totalQuestions);
+  els.roundLabel.textContent = `${progress.current} / ${progress.total}`;
   els.questionText.textContent =
     question.type === "missing" ? `? × ${question.a} = ${question.a * question.b}` : `${question.a} × ${question.b}`;
 

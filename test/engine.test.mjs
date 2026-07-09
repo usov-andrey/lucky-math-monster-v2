@@ -17,6 +17,7 @@ import {
   checkFocusSpacing,
   createSession,
   currentQuestion,
+  getSessionProgress,
   answerCorrect,
   answerWrong,
   isShiny,
@@ -233,6 +234,29 @@ test("isShiny: true for 0-1 countable wrongs; repeated errors on one fact don't 
   s3 = answerWrong(s3, () => 0.5);
   assert.equal(s3.countableWrong, 2);
   assert.equal(isShiny(s3), false);
+});
+
+test("getSessionProgress: total expands when retries are requeued", () => {
+  const questions = buildSession({}, 1, mulberry32(21));
+  const plannedTotal = questions.length;
+  let session = createSession(questions, 1);
+
+  assert.deepEqual(getSessionProgress(session, plannedTotal), {
+    current: 1,
+    total: plannedTotal,
+  });
+
+  session = answerWrong(session, () => 0);
+  assert.deepEqual(getSessionProgress(session, plannedTotal), {
+    current: 2,
+    total: plannedTotal + 1,
+  });
+
+  session = answerCorrect(session, 1000);
+  assert.deepEqual(getSessionProgress(session, plannedTotal), {
+    current: 3,
+    total: plannedTotal + 1,
+  });
 });
 
 // 10: storage migration from v1 keys.

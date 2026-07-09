@@ -467,6 +467,12 @@ export function currentQuestion(session) {
   return session.queue[0] || null;
 }
 
+export function getSessionProgress(session, plannedTotal) {
+  const total = Math.max(plannedTotal || 0, session.history.length + session.queue.length);
+  const current = session.queue.length === 0 ? total : session.history.length + 1;
+  return { current, total };
+}
+
 export function answerCorrect(session, elapsedMs) {
   const question = currentQuestion(session);
   const queue = session.queue.slice(1);
