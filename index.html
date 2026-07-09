@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lucky Monster Math — Who's That Monster?</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app" aria-live="polite">
+      <section id="home-screen" class="panel-screen">
+        <div class="panel-card">
+          <header class="screen-header">
+            <p class="eyebrow" aria-hidden="true">🐾</p>
+          </header>
+
+          <button id="collected-counter" class="collected-counter" type="button" aria-label="Collection">
+            <span id="collected-count">0</span> / <span id="collected-total">9</span>
+          </button>
+
+          <button id="start-session" class="primary-button icon-button-lg" type="button" aria-label="Start">▶️</button>
+          <button id="open-dex" class="secondary-button full-width icon-button-lg" type="button" aria-label="Monsterdex">📖</button>
+
+          <p id="home-hint" class="home-hint is-hidden" aria-hidden="true">🌙</p>
+        </div>
+      </section>
+
+      <section id="game-screen" class="panel-screen is-hidden">
+        <div class="game-shell">
+          <header class="topbar">
+            <div id="round-pill" class="top-pill round-pill">
+              <span id="round-label">1 / 17</span>
+            </div>
+          </header>
+
+          <section class="arena">
+            <div class="arena-glow arena-glow-left"></div>
+            <div class="arena-glow arena-glow-right"></div>
+            <div id="capture-ring" class="capture-ring">
+              <div id="monster-slot" class="monster-slot">
+                <div id="active-monster" class="monster monster-sun">
+                  <div class="monster-ear monster-ear-left"></div>
+                  <div class="monster-ear monster-ear-right"></div>
+                  <div class="monster-body">
+                    <div class="monster-eye monster-eye-left"></div>
+                    <div class="monster-eye monster-eye-right"></div>
+                    <div class="monster-mouth"></div>
+                    <div class="monster-belly"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="question-card">
+            <div class="question-top">
+              <button id="play-question" class="icon-button" type="button" aria-label="Play sound">🔊</button>
+            </div>
+            <div id="question-text" class="question-text">6 × 4</div>
+          </section>
+
+          <section id="answers" class="answers" aria-label="Answer choices">
+            <button class="answer-button" type="button"></button>
+            <button class="answer-button" type="button"></button>
+            <button class="answer-button" type="button"></button>
+          </section>
+        </div>
+      </section>
+
+      <section id="reward-screen" class="reward-screen is-hidden">
+        <div class="reward-card">
+          <div id="reward-monster-wrap" class="reward-monster-wrap">
+            <div id="reward-monster" class="reward-monster monster monster-sun">
+              <div class="monster-ear monster-ear-left"></div>
+              <div class="monster-ear monster-ear-right"></div>
+              <div class="monster-body">
+                <div class="monster-eye monster-eye-left"></div>
+                <div class="monster-eye monster-eye-right"></div>
+                <div class="monster-mouth"></div>
+                <div class="monster-belly"></div>
+              </div>
+            </div>
+          </div>
+          <p class="eyebrow" aria-hidden="true">✨</p>
+          <div class="reward-actions">
+            <button id="reward-continue" class="primary-button icon-button-lg" type="button" aria-label="Continue">➡️</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="dex-screen" class="panel-screen is-hidden">
+        <div class="panel-card">
+          <header class="screen-header">
+            <p class="eyebrow" aria-hidden="true">📖</p>
+          </header>
+          <section id="dex-grid" class="dex-grid" aria-label="Monster collection"></section>
+          <button id="dex-back" class="primary-button icon-button-lg" type="button" aria-label="Home">🏠</button>
+        </div>
+      </section>
+
+      <section id="parent-screen" class="parent-screen is-hidden">
+        <div class="parent-card">
+          <div class="parent-top">
+            <h1>Parent view</h1>
+            <button id="parent-close" class="secondary-button" type="button">Close</button>
+          </div>
+
+          <h2>Mastery — ×6</h2>
+          <table id="table-six" class="fact-table"></table>
+
+          <h2>Mastery — ×7</h2>
+          <table id="table-seven" class="fact-table"></table>
+
+          <h2>Last sessions</h2>
+          <table id="table-sessions" class="fact-table"></table>
+
+          <button id="export-json" class="secondary-button" type="button">Export JSON</button>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

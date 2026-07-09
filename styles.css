@@ -1,0 +1,666 @@
+:root {
+  color-scheme: light;
+  --bg-1: #15345f;
+  --bg-2: #257197;
+  --bg-3: #93ead1;
+  --card: #fff7e1;
+  --card-2: #fffdf6;
+  --ink: #17324f;
+  --muted: #53708b;
+  --orange: #ff8c58;
+  --orange-deep: #ef5d2f;
+  --yellow: #ffd056;
+  --green: #6ed282;
+  --teal: #62d6c0;
+  --blue: #76aaff;
+  --blue-deep: #4f85e4;
+  --shadow: rgba(15, 39, 67, 0.22);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Trebuchet MS", "Arial Rounded MT Bold", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.16) 0, rgba(255, 255, 255, 0) 35%),
+    linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 48%, var(--bg-3) 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  background:
+    radial-gradient(circle at 12% 20%, #ffffff 0 2px, transparent 2px),
+    radial-gradient(circle at 70% 22%, #ffffff 0 2px, transparent 2px),
+    radial-gradient(circle at 85% 42%, #ffffff 0 2px, transparent 2px),
+    radial-gradient(circle at 30% 58%, #ffffff 0 2px, transparent 2px);
+  background-size: 180px 180px;
+}
+
+.app {
+  min-height: 100vh;
+  padding: 18px;
+}
+
+.panel-screen {
+  min-height: calc(100vh - 36px);
+  display: grid;
+  place-items: center;
+}
+
+.panel-card,
+.game-shell,
+.reward-card,
+.parent-card {
+  width: min(100%, 960px);
+  background: linear-gradient(180deg, rgba(255, 253, 244, 0.97) 0%, rgba(255, 245, 216, 0.97) 100%);
+  border-radius: 34px;
+  box-shadow: 0 24px 60px var(--shadow);
+}
+
+.panel-card,
+.reward-card {
+  padding: 22px;
+  text-align: center;
+}
+
+.game-shell {
+  padding: 20px;
+  overflow: hidden;
+  position: relative;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 7vw, 4rem);
+  line-height: 1;
+}
+
+/* --- Home / collected counter -------------------------------------- */
+
+.collected-counter {
+  margin: 6px auto 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 64px;
+  padding: 10px 26px;
+  border: 0;
+  border-radius: 999px;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--ink);
+  background: linear-gradient(180deg, #ffffff 0%, #edf8ff 100%);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.8), 0 12px 26px rgba(21, 48, 77, 0.08);
+  cursor: pointer;
+}
+
+.home-hint {
+  margin-top: 16px;
+  font-size: 2.4rem;
+}
+
+/* --- Buttons ---------------------------------------------------------- */
+
+.primary-button,
+.secondary-button,
+.icon-button,
+.answer-button {
+  border: 0;
+  border-radius: 28px;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+}
+
+.primary-button,
+.secondary-button {
+  min-height: 86px;
+  width: 100%;
+  margin-top: 16px;
+}
+
+.primary-button {
+  color: #fff;
+  background: linear-gradient(180deg, var(--blue) 0%, var(--blue-deep) 100%);
+  box-shadow: 0 16px 28px rgba(79, 133, 228, 0.3);
+}
+
+.secondary-button {
+  color: var(--ink);
+  background: linear-gradient(180deg, #fff0b7 0%, #ffd16a 100%);
+  box-shadow: 0 16px 28px rgba(255, 181, 72, 0.28);
+}
+
+.full-width {
+  width: 100%;
+}
+
+.icon-button-lg {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.icon-button {
+  min-height: 64px;
+  min-width: 64px;
+  padding: 10px;
+  font-size: 1.8rem;
+  color: #fff;
+  background: linear-gradient(180deg, var(--blue) 0%, var(--blue-deep) 100%);
+  box-shadow: 0 12px 22px rgba(79, 133, 228, 0.3);
+}
+
+.choice-card:active,
+.primary-button:active,
+.secondary-button:active,
+.icon-button:active,
+.answer-button:active {
+  transform: translateY(2px);
+}
+
+/* --- Shared monster markup ------------------------------------------- */
+
+.monster {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.monster-body {
+  position: absolute;
+  inset: 18% 14% 4%;
+  border-radius: 44% 44% 38% 38%;
+  box-shadow: inset 0 -10px 22px rgba(0, 0, 0, 0.14);
+}
+
+.monster-ear {
+  position: absolute;
+  top: 8%;
+  width: 24%;
+  height: 26%;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+
+.monster-ear-left {
+  left: 18%;
+  transform: rotate(-20deg);
+}
+
+.monster-ear-right {
+  right: 18%;
+  transform: rotate(20deg);
+}
+
+.monster-eye,
+.monster-mouth,
+.monster-belly {
+  position: absolute;
+}
+
+.monster-eye {
+  top: 30%;
+  width: 10%;
+  height: 10%;
+  border-radius: 50%;
+  background: #183253;
+}
+
+.monster-eye-left {
+  left: 30%;
+}
+
+.monster-eye-right {
+  right: 30%;
+}
+
+.monster-mouth {
+  left: 50%;
+  bottom: 28%;
+  width: 14%;
+  height: 7%;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #183253;
+}
+
+.monster-belly {
+  left: 50%;
+  bottom: 8%;
+  width: 36%;
+  height: 24%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(255, 241, 214, 0.92);
+}
+
+/* Roster: 3 reused from v1 + 5 new + 1 legendary. */
+
+.monster-sun .monster-body {
+  background: linear-gradient(180deg, #ff916c 0%, #ff6f49 100%);
+}
+.monster-sun .monster-ear {
+  background: linear-gradient(180deg, #26486f 0%, #17345d 100%);
+}
+
+.monster-mint .monster-body {
+  background: linear-gradient(180deg, #72ddb5 0%, #46b798 100%);
+}
+.monster-mint .monster-ear {
+  background: linear-gradient(180deg, #ffe67b 0%, #ffcb48 100%);
+}
+
+.monster-cloud .monster-body {
+  background: linear-gradient(180deg, #88b8ff 0%, #6494ef 100%);
+}
+.monster-cloud .monster-ear {
+  background: linear-gradient(180deg, #fff0aa 0%, #ffd96f 100%);
+}
+
+.monster-berry .monster-body {
+  background: linear-gradient(180deg, #ff8fc6 0%, #e8579f 100%);
+}
+.monster-berry .monster-ear {
+  background: linear-gradient(180deg, #7c4bd1 0%, #5c30a8 100%);
+}
+
+.monster-shado .monster-body {
+  background: linear-gradient(180deg, #9b7bea 0%, #6a45c2 100%);
+}
+.monster-shado .monster-ear {
+  background: linear-gradient(180deg, #2c2350 0%, #1a1436 100%);
+}
+
+.monster-sparky .monster-body {
+  background: linear-gradient(180deg, #fff06b 0%, #ffcf1f 100%);
+}
+.monster-sparky .monster-ear {
+  background: linear-gradient(180deg, #ff8a3d 0%, #ff6a1a 100%);
+}
+
+.monster-coraly .monster-body {
+  background: linear-gradient(180deg, #ffab8f 0%, #ff7a59 100%);
+}
+.monster-coraly .monster-ear {
+  background: linear-gradient(180deg, #3fc1c9 0%, #279199 100%);
+}
+
+.monster-frosty .monster-body {
+  background: linear-gradient(180deg, #d9f3ff 0%, #a7dcf5 100%);
+}
+.monster-frosty .monster-ear {
+  background: linear-gradient(180deg, #6fa9d8 0%, #4b83b6 100%);
+}
+
+.monster-legend .monster-body {
+  background: linear-gradient(180deg, #ffe9a8 0%, #ffb547 50%, #ff7ad9 100%);
+  box-shadow: inset 0 -10px 22px rgba(0, 0, 0, 0.14), 0 0 26px rgba(255, 199, 87, 0.6);
+}
+.monster-legend .monster-ear {
+  background: linear-gradient(180deg, #7ad9ff 0%, #b17aff 100%);
+}
+
+/* --- Shiny variant ------------------------------------------------------ */
+
+.is-shiny {
+  filter: hue-rotate(150deg) saturate(1.35);
+  position: relative;
+}
+
+.is-shiny::before {
+  content: "✨";
+  position: absolute;
+  top: -6%;
+  right: -4%;
+  font-size: 1.4rem;
+  animation: sparkle-spin 2.4s ease-in-out infinite;
+  filter: none;
+}
+
+@keyframes sparkle-spin {
+  0%, 100% { transform: rotate(0deg) scale(1); opacity: 0.9; }
+  50% { transform: rotate(18deg) scale(1.15); opacity: 1; }
+}
+
+/* --- Game screen: capture ring + silhouette reveal --------------------- */
+
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.round-pill {
+  min-height: 44px;
+  min-width: 84px;
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffffff 0%, #edf8ff 100%);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.8), 0 12px 26px rgba(21, 48, 77, 0.08);
+  font-weight: 900;
+  font-size: 1.1rem;
+}
+
+.arena {
+  margin-top: 16px;
+  padding: 18px;
+  border-radius: 30px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% -10%, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0) 45%),
+    linear-gradient(180deg, #85bbff 0%, #99ead4 100%);
+}
+
+.arena-glow {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  filter: blur(24px);
+  opacity: 0.58;
+}
+
+.arena-glow-left {
+  left: -44px;
+  top: -32px;
+  background: rgba(255, 208, 86, 0.84);
+}
+
+.arena-glow-right {
+  right: -44px;
+  top: -14px;
+  background: rgba(118, 170, 255, 0.8);
+}
+
+.capture-ring {
+  width: min(62vw, 320px);
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.95) 0 10%, rgba(255, 255, 255, 0) 22%),
+    linear-gradient(180deg, #fff7d2 0%, #ffd063 100%);
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 -14px 30px rgba(223, 76, 50, 0.18), 0 16px 32px rgba(21, 48, 77, 0.14);
+}
+
+.capture-ring.pop {
+  animation: pop-ring 420ms ease;
+}
+
+.capture-ring.charge {
+  animation: charge-ring 480ms ease;
+}
+
+.capture-ring.throw-shake {
+  animation: throw-shake 420ms ease;
+}
+
+.monster-slot {
+  position: relative;
+  width: 66%;
+  height: 66%;
+}
+
+.monster-slot::after {
+  content: "";
+  position: absolute;
+  inset: -14%;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 44px rgba(255, 255, 255, var(--glow, 0));
+  transition: box-shadow 420ms ease;
+}
+
+#active-monster {
+  width: 100%;
+  height: 100%;
+  transition: filter 420ms ease;
+}
+
+#active-monster.dodge {
+  animation: dodge-hop 460ms ease;
+}
+
+.question-card {
+  margin-top: 16px;
+  padding: 18px;
+  text-align: center;
+}
+
+.question-top {
+  display: flex;
+  justify-content: center;
+}
+
+.question-text {
+  margin-top: 12px;
+  font-size: clamp(3rem, 9vw, 5rem);
+  line-height: 1;
+  font-weight: 900;
+}
+
+.answers {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.answer-button {
+  min-height: 96px;
+  padding: 12px;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--ink);
+  box-shadow: 0 16px 28px rgba(21, 48, 77, 0.12);
+}
+
+.answer-button:nth-child(1) {
+  background: linear-gradient(180deg, #fff0ca 0%, #ffd280 100%);
+}
+.answer-button:nth-child(2) {
+  background: linear-gradient(180deg, #dff8f0 0%, #8ce0c4 100%);
+}
+.answer-button:nth-child(3) {
+  background: linear-gradient(180deg, #e6f0ff 0%, #9cc0ff 100%);
+}
+
+.answer-button.is-correct {
+  animation: right-answer 460ms ease;
+}
+.answer-button.is-correct-highlight {
+  animation: highlight-pulse 900ms ease-in-out infinite;
+  outline: 6px solid var(--green);
+  outline-offset: 2px;
+}
+.answer-button.is-wrong {
+  animation: wrong-answer 380ms ease;
+}
+.answer-button:disabled {
+  opacity: 0.55;
+}
+.answer-button.is-correct-highlight:disabled {
+  opacity: 1;
+}
+
+/* --- Reward screen ------------------------------------------------------ */
+
+.reward-screen {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 35, 59, 0.64);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.reward-monster-wrap {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 14px;
+}
+
+.reward-monster {
+  width: 100%;
+  height: 100%;
+}
+
+.reward-actions {
+  margin-top: 12px;
+}
+
+/* --- Monsterdex ---------------------------------------------------------- */
+
+.dex-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.dex-slot {
+  border: 0;
+  border-radius: 22px;
+  padding: 10px;
+  min-height: 96px;
+  background: linear-gradient(180deg, #ffffff 0%, #edf8ff 100%);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.8), 0 12px 26px rgba(21, 48, 77, 0.08);
+  cursor: pointer;
+}
+
+.dex-slot .monster {
+  width: 100%;
+  height: 76px;
+}
+
+.dex-slot.not-caught .monster {
+  filter: brightness(0);
+  opacity: 0.35;
+}
+
+.dex-slot.legendary {
+  border: 3px solid var(--yellow);
+}
+
+/* --- Parent view ---------------------------------------------------------- */
+
+.parent-screen {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  background: var(--card-2);
+  padding: 20px;
+}
+
+.parent-card {
+  padding: 20px;
+  text-align: left;
+}
+
+.parent-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fact-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 18px;
+  font-size: 0.95rem;
+}
+
+.fact-table th,
+.fact-table td {
+  border: 1px solid rgba(21, 48, 77, 0.15);
+  padding: 6px 10px;
+  text-align: left;
+}
+
+/* --- Animations ------------------------------------------------------------ */
+
+@keyframes right-answer {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes wrong-answer {
+  0%, 100% { transform: translateX(0); }
+  30% { transform: translateX(-10px); }
+  70% { transform: translateX(10px); }
+}
+
+@keyframes highlight-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes pop-ring {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+@keyframes charge-ring {
+  0% { transform: scale(1); filter: saturate(1); }
+  40% { transform: scale(1.1); filter: saturate(1.3); }
+  100% { transform: scale(1); filter: saturate(1); }
+}
+
+@keyframes throw-shake {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-6px) rotate(-3deg); }
+  75% { transform: translateX(6px) rotate(3deg); }
+}
+
+@keyframes dodge-hop {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  30% { transform: translateX(-18px) translateY(-6px); }
+  60% { transform: translateX(10px) translateY(0); }
+}
+
+@media (max-width: 860px) {
+  .answers {
+    grid-template-columns: 1fr;
+  }
+  .dex-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .answer-button {
+    min-height: 96px;
+  }
+}
+
+/* Kept last on purpose: several screens (.reward-screen, .panel-screen)
+   set their own `display` for layout, and at equal specificity the later
+   rule in the file wins a tie — so .is-hidden must stay the final rule to
+   reliably override all of them. */
+.is-hidden {
+  display: none;
+}
