@@ -17,7 +17,7 @@ import {
   checkFocusSpacing,
   createSession,
   currentQuestion,
-  getSessionProgress,
+  hasReachedSessionCap,
   answerCorrect,
   answerWrong,
   isShiny,
@@ -236,27 +236,21 @@ test("isShiny: true for 0-1 countable wrongs; repeated errors on one fact don't 
   assert.equal(isShiny(s3), false);
 });
 
-test("getSessionProgress: total expands when retries are requeued", () => {
+test("hasReachedSessionCap: session still ends at the planned total", () => {
   const questions = buildSession({}, 1, mulberry32(21));
   const plannedTotal = questions.length;
   let session = createSession(questions, 1);
 
-  assert.deepEqual(getSessionProgress(session, plannedTotal), {
-    current: 1,
-    total: plannedTotal,
-  });
+  assert.equal(hasReachedSessionCap(session, plannedTotal), false);
 
   session = answerWrong(session, () => 0);
-  assert.deepEqual(getSessionProgress(session, plannedTotal), {
-    current: 2,
-    total: plannedTotal + 1,
-  });
+  assert.equal(hasReachedSessionCap(session, plannedTotal), false);
 
   session = answerCorrect(session, 1000);
-  assert.deepEqual(getSessionProgress(session, plannedTotal), {
-    current: 3,
-    total: plannedTotal + 1,
-  });
+  assert.equal(hasReachedSessionCap(session, plannedTotal), false);
+
+  session = { ...session, history: Array.from({ length: plannedTotal }, () => ({ correct: true })) };
+  assert.equal(hasReachedSessionCap(session, plannedTotal), true);
 });
 
 // 10: storage migration from v1 keys.

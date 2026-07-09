@@ -273,7 +273,7 @@ let announcedBoss = false;
 
 function renderQuestion() {
   const question = Engine.currentQuestion(state.session);
-  if (!question) {
+  if (!question || Engine.hasReachedSessionCap(state.session, state.meta.totalQuestions)) {
     finishSession();
     return;
   }
@@ -286,8 +286,7 @@ function renderQuestion() {
   forcedContinueKey = null;
   currentChoices = Engine.buildChoices(question);
 
-  const progress = Engine.getSessionProgress(state.session, state.meta.totalQuestions);
-  els.roundLabel.textContent = `${progress.current} / ${progress.total}`;
+  els.roundLabel.textContent = `${Math.min(state.session.history.length + 1, state.meta.totalQuestions)} / ${state.meta.totalQuestions}`;
   els.questionText.textContent =
     question.type === "missing" ? `? × ${question.a} = ${question.a * question.b}` : `${question.a} × ${question.b}`;
 
