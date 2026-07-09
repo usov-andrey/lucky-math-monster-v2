@@ -1,5 +1,8 @@
-import * as Engine from "./engine.js";
-import { PHRASES, PRAISE_POOL, factTeachText, questionText, caughtText } from "./phrases.js";
+const buildSuffix = new URL(import.meta.url).search;
+const Engine = await import(`./engine.js${buildSuffix}`);
+const { PHRASES, PRAISE_POOL, factTeachText, questionText, caughtText } = await import(
+  `./phrases.js${buildSuffix}`,
+);
 
 const KEYS = {
   facts: "lmm2:facts",

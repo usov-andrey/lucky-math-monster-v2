@@ -34,6 +34,11 @@ node --test test/engine.test.mjs
 Standalone static site intended for GitHub Pages, same as v1 — no build
 step.
 
+During active testing, bump the `?v=...` suffixes in
+[index.html](/D:/Google%20Drive/Personal/lucky-math-monster-v2/index.html) to
+force browsers to fetch fresh `styles.css`, `app.js`, `engine.js`, and
+`phrases.js` instead of using cached copies.
+
 ## Manual playtest checklist
 
 Run through this on the actual target device (iPad Safari) before calling a
